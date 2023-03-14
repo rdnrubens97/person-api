@@ -20,9 +20,8 @@ public class Person {
     private String firstName;
     @Column(nullable = false)
     private String lastName;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String cpf;
-    @Column(nullable = false)
     private LocalDate birthDate;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Phone> phones;
