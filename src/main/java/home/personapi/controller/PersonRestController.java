@@ -32,4 +32,12 @@ public class PersonRestController {
         return ResponseEntity.ok().body(personService.findById(id));
     }
 
+    @DeleteMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) throws PersonNotFoundException {
+        personService.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
+
 }

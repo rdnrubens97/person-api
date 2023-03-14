@@ -18,12 +18,7 @@ public class PersonService {
     private PersonRepository personRepository;
     private final PersonMapper personMapper = PersonMapper.INSTANCE;
 
-
-    public String test(){
-        return "Testing our business model" ;
-    }
-
-    public PersonDto createPerson(PersonDto personDto){
+    public PersonDto createPerson(PersonDto personDto) {
         Person person = personMapper.toModel(personDto);
         personRepository.save(person);
         PersonDto personDto1 = personMapper.toDto(person);
@@ -38,13 +33,22 @@ public class PersonService {
     }
 
     public PersonDto findById(Long id) throws PersonNotFoundException {
-        Person person = personRepository.findById(id)
-                .orElseThrow(() -> new PersonNotFoundException(id));
+        Person person = verifyExists(id);
         return personMapper.toDto(person);
-        /*Optional<Person> optionalPerson = personRepository.findById(id);
-        if (optionalPerson.isEmpty()){
-            throw new PersonNotFoundException(id);
-        }
-        return personMapper.toDto(optionalPerson.get());*/
     }
+
+    public void deleteById(Long id) throws PersonNotFoundException {
+        verifyExists(id);
+        personRepository.deleteById(id);
+    }
+
+    private Person verifyExists(Long id) throws PersonNotFoundException {
+        return personRepository.findById(id)
+                .orElseThrow(() -> new PersonNotFoundException(id));
+    }
+
+
+
+
+
 }
