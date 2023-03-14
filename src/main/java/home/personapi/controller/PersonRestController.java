@@ -19,9 +19,15 @@ public class PersonRestController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PersonDto createPerson(@RequestBody @Validated PersonDto personDto){
-        return personService.createPerson(personDto);
+    public ResponseEntity<PersonDto> createPerson(@RequestBody @Validated PersonDto personDto){
+        return ResponseEntity.ok().body(personService.createPerson(personDto));
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<PersonDto> updatePersonById(@PathVariable Long id, @RequestBody PersonDto personDto) throws PersonNotFoundException {
+        return ResponseEntity.ok().body(personService.updatePersonById(id, personDto));
+    }
+
     @GetMapping
     public ResponseEntity<List<PersonDto>> listAllPersons(){
         return ResponseEntity.ok().body(personService.listAllPersons());
