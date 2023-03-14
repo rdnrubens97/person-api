@@ -1,28 +1,30 @@
 package home.personapi.dto;
 
 import home.personapi.entity.Phone;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
-import lombok.Data;
+import lombok.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
+
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PersonDto {
+    private Long id;
     private String firstName;
     private String lastName;
-    private LocalDate birthDate;
+    private String cpf;
+    private String birthDate;
     private List<Phone> phones;
 
     @Override
     public String toString(){
-        return "Person {" +
+        return "Person: " +
                 "\nName: " + firstName + " " + lastName +
+                "\nCPF: " + cpf +
                 "\nBirth Date: " + birthDate +
-                "\nPhone(s)" + phones;
+                "\nPhones: " + phones + ".";
     }
 
 }
