@@ -26,4 +26,9 @@ public class PersonRestController {
         return ResponseEntity.ok().body(personService.listAllPersons());
     }
 
+    @GetMapping(value = "{id}")
+    public ResponseEntity<PersonDto> findById(@PathVariable Long id){
+        return ResponseEntity.ok().body(personService.findById(id));
+    }
+
 }

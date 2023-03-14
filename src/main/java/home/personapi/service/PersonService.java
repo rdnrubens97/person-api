@@ -34,4 +34,8 @@ public class PersonService {
                 .map(model -> personMapper.toDto(model))
                 .collect(Collectors.toList());
     }
+
+    public PersonDto findById(Long id) {
+        return personMapper.toDto(personRepository.findById(id).get());
+    }
 }
