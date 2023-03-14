@@ -2,12 +2,14 @@ package home.personapi.service;
 
 import home.personapi.dto.PersonDto;
 import home.personapi.entity.Person;
+import home.personapi.exception.PersonNotFoundException;
 import home.personapi.mapper.PersonMapper;
 import home.personapi.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,7 +37,14 @@ public class PersonService {
                 .collect(Collectors.toList());
     }
 
-    public PersonDto findById(Long id) {
-        return personMapper.toDto(personRepository.findById(id).get());
+    public PersonDto findById(Long id) throws PersonNotFoundException {
+        Person person = personRepository.findById(id)
+                .orElseThrow(() -> new PersonNotFoundException(id));
+        return personMapper.toDto(person);
+        /*Optional<Person> optionalPerson = personRepository.findById(id);
+        if (optionalPerson.isEmpty()){
+            throw new PersonNotFoundException(id);
+        }
+        return personMapper.toDto(optionalPerson.get());*/
     }
 }

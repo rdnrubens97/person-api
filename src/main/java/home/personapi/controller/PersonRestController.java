@@ -1,6 +1,7 @@
 package home.personapi.controller;
 
 import home.personapi.dto.PersonDto;
+import home.personapi.exception.PersonNotFoundException;
 import home.personapi.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,8 +27,8 @@ public class PersonRestController {
         return ResponseEntity.ok().body(personService.listAllPersons());
     }
 
-    @GetMapping(value = "{id}")
-    public ResponseEntity<PersonDto> findById(@PathVariable Long id){
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<PersonDto> findById(@PathVariable Long id) throws PersonNotFoundException {
         return ResponseEntity.ok().body(personService.findById(id));
     }
 
